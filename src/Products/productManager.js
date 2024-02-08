@@ -77,15 +77,15 @@ class ProductManager {
         const newProduct = new Product(title, description, code, price, status, stock, category, thumbnails, id)
         try {
             this.parseList = await this.getAllProducts()
-            const upProductIndex = this.parseList.findIndex((p) => p.code === newProduct.code)
-            if (upProductIndex !== -1) {
-                Object.entries(newProduct).forEach(([key, value]) => {
-                    if (key !== 'id' && this.parseList[upProductIndex][key] !== value) {
-                        this.parseList[upProductIndex][key] = value;
+            const productIndex = this.parseList.findIndex((p) => p.code === newProduct.code)
+            if (productIndex !== -1) {
+                let productToUpdate = this.parseList[productIndex];
+                for (let key in newProduct) {
+                    if (key !== 'id' && productToUpdate[key] !== newProduct[key]) {
+                        productToUpdate[key] = newProduct[key];
                     }
-                });
+                }
             }
-            //console.log(this.parseList[upProductIndex])
             await this.filesystem.promises.writeFile(this.productFileName, JSON.stringify(this.parseList, null, 2, '\t'))
             return { success: true, message: 'Dato Actualizado con exito', newProduct }
         } catch (error) {
