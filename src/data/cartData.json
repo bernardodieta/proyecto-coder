@@ -1,0 +1,27 @@
+[
+  {
+    "id": "j6v9vr2gt",
+    "products": []
+  },
+  {
+    "id": "ndcotjll7",
+    "products": [
+      {
+        "productId": "123",
+        "quantity": 3
+      },
+      {
+        "productId": "asd23",
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "id": "4a9de9mav",
+    "products": []
+  },
+  {
+    "id": "eq117jz4s",
+    "products": []
+  }
+]
