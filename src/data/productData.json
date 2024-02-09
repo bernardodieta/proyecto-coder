@@ -23,5 +23,20 @@
       "2": "img2"
     },
     "id": 2
+  },
+  {
+    "title": "Teclado",
+    "description": "Teclado Gamer",
+    "code": "T1",
+    "price": 140,
+    "status": true,
+    "stock": 4,
+    "category": "perifericos",
+    "thumbnails": {
+      "1": "img1",
+      "2": "img2",
+      "3": "img3"
+    },
+    "id": 510447
   }
 ]

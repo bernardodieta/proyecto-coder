@@ -8,14 +8,14 @@ const cartManager = new CartManager()
 
 cartRouter.get('/api/carts', async (req, res) => {
     const result = await cartManager.getCartsList()
-    result.success ? res.status(200).json(result) : res.status(400).json(result)
+    result.success ? res.status(200).json(result.parseList) : res.status(400).json(result)
 
 });
 
 cartRouter.get('/api/cart/:cid', async (req, res) => {
     const cid = req.params.cid;
     const result = await cartManager.getCartById(cid)
-    result.success ? res.status(200).json(result) : res.status(400).json(result)
+    result.success ? res.status(200).json(result.result) : res.status(400).json(result)
 
 })
 
@@ -27,10 +27,7 @@ cartRouter.post('/api/carts/', async (req, res) => {
 cartRouter.post('/api/carts/:cid/product/:pid', async (req, res) => {
     const { cid, pid } = req.params;
     const result = await cartManager.addProductToCart(cid, pid);
-    if (result.success) {
-        res.status(201).send(result.cart);
-    } else {
-        res.status(404).send(result.message);
-    }
+    result.success ? res.status(200).json(result.cart) : res.status(400).json(result)
+
 });
 export default cartRouter;

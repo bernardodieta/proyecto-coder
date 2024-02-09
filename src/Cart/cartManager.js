@@ -1,3 +1,4 @@
+import { error } from 'console';
 import fs from 'fs'
 
 class CartManager {
@@ -14,7 +15,7 @@ class CartManager {
     getCartsList = async () => {
         const result = await this.filesystem.promises.readFile(this.cartsFilename, 'utf-8')
         const parseList = JSON.parse(result)
-        return { success: true, message: 'Lista' }, parseList
+        return { success: true, message: 'Lista', parseList }
     }
 
     createNewCart = async () => {
@@ -24,8 +25,13 @@ class CartManager {
         const cart = { id: generateId(), products: [] };
         const parseList = await this.getCartsList()
         this.carts.push(...parseList, cart);
-        const result = await this.filesystem.promises.writeFile(this.cartsFilename, JSON.stringify(this.carts, null, 2, '\t'))
-        return this.carts
+        try {
+            const result = await this.filesystem.promises.writeFile(this.cartsFilename, JSON.stringify(this.carts, null, 2, '\t'))
+            return { success: true, message: 'Carrito creado con exito' }, this.carts
+        } catch (error) {
+            return { success: false, message: 'Hubo un error al crear el carrito de compras' }
+        }
+
 
     }
 
@@ -46,8 +52,8 @@ class CartManager {
     }
     getCartById = async (cid) => {
         const parseList = await this.getCartsList()
-        const productsFinded = parseList.find((p) => p.id === cid)
-        return { success: true, message: 'Datos del producto solicitado:' }, productsFinded.products
+        const result = parseList.find((p) => p.id === cid)
+        return { success: true, message: 'Datos del producto solicitado:', result }
     }
 }
 
