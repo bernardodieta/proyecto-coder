@@ -24,10 +24,10 @@ class CartManager {
         }
         const cart = { id: generateId(), products: [] };
         const parseList = await this.getCartsList()
-        this.carts.push(...parseList, cart);
+        this.carts.push(...parseList.parseList, cart);
         try {
             const result = await this.filesystem.promises.writeFile(this.cartsFilename, JSON.stringify(this.carts, null, 2, '\t'))
-            return { success: true, message: 'Carrito creado con exito' }, this.carts
+            return { success: true, message: 'Carrito creado con exito', carts: this.carts }
         } catch (error) {
             return { success: false, message: 'Hubo un error al crear el carrito de compras' }
         }

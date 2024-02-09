@@ -21,7 +21,7 @@ cartRouter.get('/api/cart/:cid', async (req, res) => {
 
 cartRouter.post('/api/carts/', async (req, res) => {
     const result = await cartManager.createNewCart()
-    result.success ? res.status(200).json(result) : res.status(400).json(result)
+    result.success ? res.status(200).json(result.carts) : res.status(400).json(result)
 });
 
 cartRouter.post('/api/carts/:cid/product/:pid', async (req, res) => {
