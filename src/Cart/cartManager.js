@@ -35,8 +35,8 @@ class CartManager {
 
     addProductToCart = async (cid, pid) => {
         const parseList = await this.getCartsList();
-        console.log(cid)
-        console.log(parseList)
+        //console.log(cid)
+        //console.log(parseList)
         const cart = parseList.find((c) => c.id === cid);
 
         if (!cart) {
