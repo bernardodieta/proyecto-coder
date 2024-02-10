@@ -15,7 +15,7 @@ class CartManager {
     getCartsList = async () => {
         const result = await this.filesystem.promises.readFile(this.cartsFilename, 'utf-8')
         const parseList = JSON.parse(result)
-        return { success: true, message: 'Lista', parseList }
+        return { success: true, message: 'Lista' },parseList
     }
 
     createNewCart = async () => {
@@ -24,20 +24,21 @@ class CartManager {
         }
         const cart = { id: generateId(), products: [] };
         const parseList = await this.getCartsList()
-        this.carts.push(...parseList.parseList, cart);
+        this.carts.push(...parseList, cart);
         try {
             const result = await this.filesystem.promises.writeFile(this.cartsFilename, JSON.stringify(this.carts, null, 2, '\t'))
             return { success: true, message: 'Carrito creado con exito', carts: this.carts }
         } catch (error) {
             return { success: false, message: 'Hubo un error al crear el carrito de compras' }
         }
-
-
     }
 
     addProductToCart = async (cid, pid) => {
         const parseList = await this.getCartsList();
+        console.log(cid)
+        console.log(parseList)
         const cart = parseList.find((c) => c.id === cid);
+
         if (!cart) {
             return { success: false, message: 'No se encuentra un carrito de compras para agregar productos' };
         }
